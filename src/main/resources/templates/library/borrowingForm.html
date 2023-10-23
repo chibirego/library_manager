@@ -22,9 +22,9 @@
                             <h4 class="title">Borrow book data</h4>
                         </div>
                         <div class="content">
-                            <form action="@{/library/borrow/{id}(id=${id})}" th:object="${borrowingForm}" method="get">
+                            <form action="@{/library/borrow/{id}(id=${id})}" th:object="${libraryForm}" method="post">
                                 <div class="book-title">
-                                    Javascriptパターン　優れたアプリケーションのための作法
+                                    <span th:text="*{name}"></span>
                                 </div>
                                 <hr>
                                 <div class="form-group">

@@ -16,6 +16,7 @@ import com.example.entity.Log;
 import com.example.entity.Library;
 import com.example.service.LibraryService;
 import com.example.service.LogService;
+import com.example.form.LibraryForm;
 
 @Controller
 @RequestMapping("/library")
@@ -35,12 +36,17 @@ public class LibraryController {
 		return "library/index";
 	}
 	
-	@GetMapping("borrow/{id}")
+	@GetMapping("borrow")
 	public String borrowingForm(@RequestParam("id") Integer id, Model model) {
 		Library library = this.libraryService.findById(id);
 		model.addAttribute("id", id);
 		
-		return "library/borrow";
+		return "library/borrowingForm";
+	}
+	
+	@PostMapping("borrow")
+	public String borrow(@ModelAttribute("libraryForm") LibraryForm libraryform) {
+		return "library/borrowingForm";
 	}
 	
 	// 商品編集ページ

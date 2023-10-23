@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.entity.Library;
-import com.example.entity.Log;
 import com.example.repository.LibraryRepository;
 
 @Service
@@ -24,8 +23,8 @@ public class LibraryService {
 	}
 	
 	public Library findById(Integer id) {
-		Optional<Library> optionalLog = this.libraryRepository.findById(id);
-		Library library = optionalLog.get();
+		Optional<Library> optionalLibrary = this.libraryRepository.findById(id);
+		Library library = optionalLibrary.get();
 		return library;
 	}
 }
