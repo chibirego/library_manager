@@ -18,7 +18,7 @@ import com.example.service.LibraryService;
 import com.example.service.LogService;
 
 @Controller
-@RequestMapping("library")
+@RequestMapping("/library")
 public class LibraryController {
 	
 	private final LibraryService libraryService;
@@ -39,6 +39,7 @@ public class LibraryController {
 	public String borrowingForm(@RequestParam("id") Integer id, Model model) {
 		Library library = this.libraryService.findById(id);
 		model.addAttribute("id", id);
+		
 		return "library/borrow";
 	}
 	
