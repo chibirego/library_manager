@@ -9,18 +9,22 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "libraries")
-public class Library {
+@Table(name = "USERS")
+public class User {
 	@Id
-	@SequenceGenerator(name = "LIBRARY_ID_GENERATOR", sequenceName = "LIBRARY_ID_SEQ", allocationSize = 1)
+	@SequenceGenerator(name = "USER_ID_GENERATOR", sequenceName = "USER_ID_SEQ", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USER_ID_GENERATOR")
 	@Column(name = "ID")
 	private Integer id;
 	
 	@Column(name = "NAME")
 	private String name;
 	
-	@Column(name = "USER_ID")
-	private Integer userId;
+	@Column(name = "EMAIL")
+	private String email;
+	
+	@Column(name = "PASSWORD")
+	private String password;
 	
 	public Integer getId() {
 		return this.id;
@@ -38,11 +42,19 @@ public class Library {
 		this.name = name;
 	}
 	
-	public Integer getUserId() {
-		return this.userId;
+	public String getEmail() {
+		return this.email;
 	}
 	
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	public String getPassword() {
+		return this.password;
+	}
+	
+	public void Password(String password) {
+		this.password = password;
 	}
 }
