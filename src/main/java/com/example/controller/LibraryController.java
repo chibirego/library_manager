@@ -3,6 +3,7 @@ package com.example.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import com.example.entity.Log;
 import com.example.entity.Library;
 import com.example.service.LibraryService;
 import com.example.service.LogService;
+import com.example.service.LoginUser;
 import com.example.form.LibraryForm;
 
 @Controller
@@ -23,10 +25,12 @@ import com.example.form.LibraryForm;
 public class LibraryController {
 	
 	private final LibraryService libraryService;
+	private final LogService logService;
 	
 	@Autowired
-	public LibraryController(LibraryService libraryService) {
+	public LibraryController(LibraryService libraryService, LogService logService) {
 		this.libraryService = libraryService;
+		this.logService = logService;
 	}
 	
 	@GetMapping
@@ -36,17 +40,25 @@ public class LibraryController {
 		return "library/index";
 	}
 	
-	@GetMapping("borrow")
-	public String borrowingForm(@RequestParam("id") Integer id, Model model) {
+	@GetMapping("/borrow")
+	public String borrowingForm(@RequestParam("id") Integer id, Model model, @ModelAttribute("libraryForm") LibraryForm libraryForm) {
 		Library library = this.libraryService.findById(id);
+		libraryForm.setName(library.getName());
+		libraryForm.setId(library.getId());
+		
 		model.addAttribute("id", id);
+		model.addAttribute("library", library);
 		
 		return "library/borrowingForm";
 	}
 	
-	@PostMapping("borrow")
-	public String borrow(@ModelAttribute("libraryForm") LibraryForm libraryform) {
-		return "library/borrowingForm";
+	@PostMapping("/borrow")
+	public String borrow(@RequestParam("id") Integer id, @RequestParam("return_due_date") String returnDueDate, @AuthenticationPrincipal LoginUser loginUser) {
+		Library library = this.libraryService.findById(id);
+		library.setUserId(library.getUserId());
+		
+		Log log = this.logService.findById(id);
+		return "redirect:/library";
 	}
 	
 	// 商品編集ページ

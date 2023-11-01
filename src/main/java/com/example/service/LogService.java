@@ -26,4 +26,10 @@ public class LogService {
 	public List<Log> findByReturnDateIsNull() {
 		return this.logRepository.findByReturnDateIsNull();
 	}
+	
+	public Log findById(Integer libraryId) {
+		Optional<Log> optionalLog = this.logRepository.findById(libraryId);
+		Log log = optionalLog.get();
+		return log;
+	}
 }
